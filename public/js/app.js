@@ -1921,6 +1921,9 @@ __webpack_require__.r(__webpack_exports__);
       errors: []
     };
   },
+  mounted: function mounted() {
+    this.getUser();
+  },
   methods: {
     updateProfile: function updateProfile() {
       var _this = this;
@@ -37507,7 +37510,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "First name..." },
+                    attrs: {
+                      disabled: _vm.loading,
+                      type: "text",
+                      placeholder: "First name..."
+                    },
                     domProps: { value: _vm.user.first_name },
                     on: {
                       keyup: function($event) {
@@ -37565,7 +37572,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "Last name..." },
+                    attrs: {
+                      disabled: _vm.loading,
+                      type: "text",
+                      placeholder: "Last name..."
+                    },
                     domProps: { value: _vm.user.last_name },
                     on: {
                       keyup: function($event) {
@@ -37623,7 +37634,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "Email address..." },
+                    attrs: {
+                      disabled: _vm.loading,
+                      type: "text",
+                      placeholder: "Email address..."
+                    },
                     domProps: { value: _vm.user.email },
                     on: {
                       keyup: function($event) {
@@ -37666,6 +37681,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary",
+                  attrs: { disabled: _vm.loading },
                   on: {
                     click: function($event) {
                       return _vm.updateProfile()
@@ -37752,7 +37768,11 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "email", placeholder: "Email address" },
+            attrs: {
+              disabled: _vm.loading,
+              type: "email",
+              placeholder: "Email address"
+            },
             domProps: { value: _vm.userdata.email },
             on: {
               keyup: function($event) {
@@ -37802,7 +37822,11 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "password", placeholder: "Account password" },
+            attrs: {
+              disabled: _vm.loading,
+              type: "password",
+              placeholder: "Account password"
+            },
             domProps: { value: _vm.userdata.password },
             on: {
               keyup: function($event) {
@@ -37843,7 +37867,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-primary btn-block btn-flat",
-              attrs: { type: "submit" },
+              attrs: { disabled: _vm.loading, type: "submit" },
               on: {
                 click: function($event) {
                   return _vm.signIn()
@@ -37930,7 +37954,11 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "email", placeholder: "Email address" },
+            attrs: {
+              disabled: _vm.loading,
+              type: "email",
+              placeholder: "Email address"
+            },
             domProps: { value: _vm.userdata.email },
             on: {
               keyup: function($event) {
@@ -37980,7 +38008,11 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", placeholder: "First name" },
+            attrs: {
+              disabled: _vm.loading,
+              type: "text",
+              placeholder: "First name"
+            },
             domProps: { value: _vm.userdata.first_name },
             on: {
               keyup: function($event) {
@@ -38030,7 +38062,11 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Last name" },
+            attrs: {
+              disabled: _vm.loading,
+              type: "text",
+              placeholder: "Last name"
+            },
             domProps: { value: _vm.userdata.last_name },
             on: {
               keyup: function($event) {
@@ -38080,7 +38116,11 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "password", placeholder: "Set account password" },
+            attrs: {
+              disabled: _vm.loading,
+              type: "password",
+              placeholder: "Set account password"
+            },
             domProps: { value: _vm.userdata.password },
             on: {
               keyup: function($event) {
@@ -38131,6 +38171,7 @@ var render = function() {
             ],
             staticClass: "form-control",
             attrs: {
+              disabled: _vm.loading,
               type: "password",
               placeholder: "Confirm account password"
             },
@@ -38176,7 +38217,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-primary btn-block btn-flat",
-              attrs: { type: "submit" },
+              attrs: { disabled: _vm.loading, type: "submit" },
               on: {
                 click: function($event) {
                   return _vm.signUp()
@@ -53393,11 +53434,6 @@ Vue.mixin({
       loading: false
     };
   },
-  mounted: function mounted() {
-    if (!['register', 'login'].includes(this.$route.name)) {
-      this.getUser();
-    }
-  },
   methods: {
     getUser: function getUser() {
       var _this = this;
@@ -53414,14 +53450,13 @@ Vue.mixin({
 });
 var app = new Vue({
   el: '#app',
-  data: function data() {
-    return {
-      user: ''
-    };
-  },
   mounted: function mounted() {
     if (typeof this.$route.meta != 'undefined' && typeof this.$route.meta.title != 'undefined') {
       document.title = this.$route.meta.title + ' | ' + appName;
+    }
+
+    if (!['register', 'login'].includes(this.$route.name)) {
+      this.getUser();
     }
   },
   methods: {

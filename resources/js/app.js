@@ -20,11 +20,6 @@ Vue.mixin({
             loading: false
         }
     },
-    mounted() {
-        if(!['register', 'login'].includes(this.$route.name)) {
-            this.getUser();
-        }
-    },
     methods: {
         getUser() {
             let _this = this;
@@ -41,14 +36,12 @@ Vue.mixin({
 
 const app = new Vue({
     el: '#app',
-    data() {
-        return {
-            user: ''
-        }
-    },
     mounted() {
         if(typeof(this.$route.meta) != 'undefined' && typeof(this.$route.meta.title) != 'undefined') {
             document.title = this.$route.meta.title + ' | ' + appName;
+        }
+        if(!['register', 'login'].includes(this.$route.name)) {
+            this.getUser();
         }
     },
     methods: {

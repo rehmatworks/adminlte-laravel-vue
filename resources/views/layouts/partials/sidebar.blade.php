@@ -11,15 +11,20 @@
         </div>
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Dashboard</li>
-            <li>
+            <li :class="{'active': $route.name == 'home'}">
                 <router-link :to="{'name': 'home'}">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </router-link>
             </li>
-            <li class="header">Account Settings</li>
-            <li>
+            <li class="header">Website & Account</li>
+            <li :class="{'active': $route.name == 'account-settings'}">
                 <router-link :to="{name: 'account-settings'}">
-                    <i class="fa fa-cog"></i><span>Account Settings</span>
+                    <i class="fa fa-cogs"></i><span>Website Settings</span>
+                </router-link>
+            </li>
+            <li :class="{'active': $route.name == 'account-settings'}">
+                <router-link :to="{name: 'account-settings'}">
+                    <i class="fa fa-user"></i><span>Profile Settings</span>
                 </router-link>
             </li>
         </ul>

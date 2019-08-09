@@ -16,7 +16,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.first_name}">
                             <label>First Name</label>
-                            <input @keyup.enter="updateProfile()" type="text" v-model="user.first_name" class="form-control" placeholder="First name...">
+                            <input :disabled="loading" @keyup.enter="updateProfile()" type="text" v-model="user.first_name" class="form-control" placeholder="First name...">
                             <span class="help-block" v-if="errors.first_name">{{ errors.first_name[0] }}</span>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.last_name}">
                             <label>Last Name</label>
-                            <input @keyup.enter="updateProfile()" type="text" v-model="user.last_name" class="form-control" placeholder="Last name...">
+                            <input :disabled="loading" @keyup.enter="updateProfile()" type="text" v-model="user.last_name" class="form-control" placeholder="Last name...">
                             <span class="help-block" v-if="errors.last_name">{{ errors.last_name[0] }}</span>
                         </div>
                     </div>
@@ -34,14 +34,14 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.email}">
                             <label>Email</label>
-                            <input @keyup.enter="updateProfile()" type="text" v-model="user.email" class="form-control" placeholder="Email address...">
+                            <input :disabled="loading" @keyup.enter="updateProfile()" type="text" v-model="user.email" class="form-control" placeholder="Email address...">
                             <span class="help-block" v-if="errors.email">{{ errors.email[0] }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button @click="updateProfile()" class="btn btn-primary">Update Profile</button>
+                        <button :disabled="loading" @click="updateProfile()" class="btn btn-primary">Update Profile</button>
                     </div>
                 </div>
             </div>
@@ -59,6 +59,9 @@ export default {
         return {
             errors: []
         }
+    },
+    mounted() {
+        this.getUser();
     },
     methods: {
         updateProfile() {

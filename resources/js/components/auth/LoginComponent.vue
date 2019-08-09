@@ -3,19 +3,19 @@
       <div class="login-box-body">
           <p class="login-box-msg">Sign in to your account</p>
           <div class="form-group has-feedback" :class="{'has-error': errors.email}">
-              <input @keyup.enter="signIn()" type="email" v-model="userdata.email" class="form-control" placeholder="Email address">
+              <input :disabled="loading" @keyup.enter="signIn()" type="email" v-model="userdata.email" class="form-control" placeholder="Email address">
               <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
               <span class="help-block" v-if="errors.email">{{ errors.email[0] }}</span>
           </div>
           <div class="form-group has-feedback" :class="{'has-error': errors.password}">
-              <input @keyup.enter="signIn()" type="password" v-model="userdata.password" class="form-control" placeholder="Account password">
+              <input :disabled="loading" @keyup.enter="signIn()" type="password" v-model="userdata.password" class="form-control" placeholder="Account password">
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <span class="help-block" v-if="errors.password">{{ errors.password[0] }}</span>
               <small>Forgot your password? <a href="/">Reset it here</a></small>
           </div>
           <div class="row">
               <div class="col-xs-4 pull-right">
-                  <button @click="signIn()" type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                  <button :disabled="loading" @click="signIn()" type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
               </div>
           </div>
       </div>
