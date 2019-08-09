@@ -37361,25 +37361,32 @@ var render = function() {
                 0
               )
             ])
-          : _c("p", { staticClass: "text-muted text-center" }, [
-              _vm._v("No notifications found.")
-            ])
+          : _c(
+              "p",
+              {
+                staticClass: "text-muted",
+                staticStyle: { "margin-top": "10px", "padding-left": "10px" }
+              },
+              [_vm._v("No notifications found!")]
+            )
       ]),
       _vm._v(" "),
-      _c("li", { staticClass: "footer" }, [
-        _c(
-          "a",
-          {
-            attrs: { href: "javascript:void(0)" },
-            on: {
-              click: function($event) {
-                return _vm.clearNotifs()
-              }
-            }
-          },
-          [_vm._v("Clear all")]
-        )
-      ])
+      _vm.notifs.length
+        ? _c("li", { staticClass: "footer" }, [
+            _c(
+              "a",
+              {
+                attrs: { href: "javascript:void(0)" },
+                on: {
+                  click: function($event) {
+                    return _vm.clearNotifs()
+                  }
+                }
+              },
+              [_vm._v("Clear all")]
+            )
+          ])
+        : _vm._e()
     ])
   ])
 }

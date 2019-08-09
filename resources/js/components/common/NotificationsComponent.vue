@@ -14,9 +14,9 @@
                         </a>
                     </li>
                 </ul>
-                <p v-else class="text-muted text-center">No notifications found.</p>
+                <p style="margin-top:10px; padding-left:10px;" v-else class="text-muted">No notifications found!</p>
             </li>
-            <li class="footer"><a @click="clearNotifs()" href="javascript:void(0)">Clear all</a></li>
+            <li v-if="notifs.length" class="footer"><a @click="clearNotifs()" href="javascript:void(0)">Clear all</a></li>
         </ul>
     </li>
 </template>
