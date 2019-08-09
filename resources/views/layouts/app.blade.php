@@ -24,10 +24,10 @@
         <div class="content-wrapper">
             <router-view></router-view>
         </div>
-        @include('layouts.partials.footer')
         <div class="control-sidebar-bg"></div>
     </div>
     <script type="text/javascript">
+        var baseUrl = '{{ url('/') }}';
         var appName = '{{ env('APP_NAME') }}';
     </script>
     <script src="{{ mix('js/app.js') }}"></script>

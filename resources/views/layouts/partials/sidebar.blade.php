@@ -1,12 +1,12 @@
 <aside class="main-sidebar">
     <section class="sidebar">
         <div class="user-panel">
-            <div class="pull-left image">
-                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            <div v-if="user" class="pull-left image">
+                <img :src="user.gravatar" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
-                <small class="text-muted">System Administrator</small>
+                <p v-text="user.name"></p>
+                <small class="text-muted" v-text="'Joined: ' + user.membersince"></small>
             </div>
         </div>
         <ul class="sidebar-menu" data-widget="tree">
@@ -18,9 +18,9 @@
             </li>
             <li class="header">Account Settings</li>
             <li>
-                <a href="#">
+                <router-link :to="{name: 'account-settings'}">
                     <i class="fa fa-cog"></i><span>Account Settings</span>
-                </a>
+                </router-link>
             </li>
         </ul>
     </section>
