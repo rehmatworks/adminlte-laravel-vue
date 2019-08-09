@@ -1,9 +1,11 @@
 <?php
-Auth::routes();
-Route::get('home', function() {
-    return redirect('/');
-});
 Route::post('signout', function() {
     Auth::logout();
 });
-Route::any('/{any}', 'SpaController')->where('any', '.*')->middleware('auth');
+Route::get('auth', function() {
+    return redirect(url('auth/login'));
+});
+Route::post('/auth/login', 'Auth\LoginController@login');
+Route::post('/auth/register', 'Auth\RegisterController@register');
+Route::any('/auth/{any}', 'SpaController@auth')->where('any', '.*')->middleware('guest');
+Route::any('/{any}', 'SpaController@dashboard')->where('any', '.*')->middleware('auth');

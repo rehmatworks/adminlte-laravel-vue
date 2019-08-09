@@ -14,5 +14,21 @@ export const routes = [
         meta: {
             title: 'Account Settings'
         }
+    },
+    {
+        path: '/auth/login',
+        name: 'login',
+        component: require('../components/auth/LoginComponent').default,
+        meta: {
+            title: 'Account Login'
+        }
+    },
+    {
+        path: '/auth/register',
+        name: 'register',
+        component: require('../components/auth/RegisterComponent').default,
+        meta: {
+            title: 'Account Signup'
+        }
     }
 ];

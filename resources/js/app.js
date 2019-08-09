@@ -13,6 +13,32 @@ const router = new VueRouter({
     routes: routes,
 });
 
+Vue.mixin({
+    data() {
+        return {
+            user: false,
+            loading: false
+        }
+    },
+    mounted() {
+        if(!['register', 'login'].includes(this.$route.name)) {
+            this.getUser();
+        }
+    },
+    methods: {
+        getUser() {
+            let _this = this;
+            _this.loading = true;
+            axios.get(`${baseUrl}/api/user`).then((res) => {
+                _this.user = res.data;
+                _this.loading = false;
+            }).catch((err) => {
+                _this.loading = false;
+            });
+        }
+    }
+});
+
 const app = new Vue({
     el: '#app',
     data() {
@@ -24,17 +50,8 @@ const app = new Vue({
         if(typeof(this.$route.meta) != 'undefined' && typeof(this.$route.meta.title) != 'undefined') {
             document.title = this.$route.meta.title + ' | ' + appName;
         }
-        this.getUser();
     },
     methods: {
-        getUser() {
-            let _this = this;
-            axios.get(`${baseUrl}/api/user`).then((res) => {
-                _this.user = res.data;
-            }).catch((err) => {
-                window.location = `${baseUrl}/login`;
-            });
-        },
         signOut() {
             axios.post(`${baseUrl}/signout`).then((res) => {
                 window.location = `${baseUrl}/login`;

@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title') | {{ env('APP_NAME') }}</title>
+    <title>Authentication Area | {{ env('APP_NAME') }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
@@ -22,12 +23,16 @@
 </head>
 
 <body class="hold-transition login-page">
-    <div class="login-box">
+    <div class="login-box" id="app">
         <div class="login-logo">
             <a href="{{ url('/') }}">{{ env('APP_NAME') }}</a>
         </div>
-        @yield('content')
+        <router-view></router-view>
     </div>
+    <script type="text/javascript">
+        var baseUrl = '{{ url('/') }}';
+        var appName = '{{ env('APP_NAME') }}';
+    </script>
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
-
 </html>

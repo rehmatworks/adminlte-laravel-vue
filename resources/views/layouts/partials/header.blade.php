@@ -22,7 +22,7 @@
                             <img :src="user.gravatar" class="img-circle" alt="User Image">
                             <p>
                                 <span v-text="user.name"></span>
-                                <small>Member since: <span v-text="user.membersince"></span></small>
+                                <small>Joined: <span v-text="user.membersince"></span></small>
                             </p>
                         </li>
                         <li class="user-footer">

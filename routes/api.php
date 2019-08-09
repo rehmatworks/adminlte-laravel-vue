@@ -6,7 +6,7 @@ Route::middleware('auth:api')->group(function() {
     Route::get('user', function(Request $request) {
         return $request->user();
     });
-
+    Route::post('update-profile', 'UserController@update');
     Route::get('get-notifs', 'NotificationsController@get');
     Route::post('clear-notifs/{notif?}', 'NotificationsController@clear');
 });

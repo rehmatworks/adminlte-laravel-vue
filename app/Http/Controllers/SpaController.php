@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class SpaController extends Controller
 {
-    public function __invoke()
+    public function dashboard()
     {
         return view('layouts.app');
+    }
+
+    public function auth()
+    {
+        return view('layouts.auth');
     }
 }

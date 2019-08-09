@@ -17,10 +17,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password',
     ];
 
-    protected $appends = ['gravatar', 'membersince'];
+    protected $appends = ['name', 'gravatar', 'membersince'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -49,5 +49,10 @@ class User extends Authenticatable
     public function getMembersinceAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+
+    public function getNameAttribute()
+    {
+        return sprintf('%s %s', $this->attributes['first_name'], $this->attributes['last_name']);
     }
 }
