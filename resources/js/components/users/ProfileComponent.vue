@@ -97,13 +97,14 @@ export default {
             _this.user.role = _this.role;
             axios.patch(`${baseUrl}/api/users/${_this.user.id}`, _this.user).then((res) => {
                 _this.loading = false;
-                _this.showToast('Settings have been updated', 'success');
+                _this.showToast('Profile has been updated', 'success');
                 _this.$parent.getUser();
             }).catch((err) => {
                 _this.loading = false;
-                _this.showToast('Settings cannot be updated', 'error');
                 if(err.response.data.errors) {
                     _this.errors = err.response.data.errors;
+                } else {
+                    _this.showToast('Profile cannot be updated', 'error');
                 }
             });
         },

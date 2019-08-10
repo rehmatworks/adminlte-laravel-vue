@@ -25,8 +25,8 @@ class UserTableSeeder extends Seeder
         $superAdmin->assignRole($superAdminRole);
 
         $admin = User::create([
-            'first_name' => 'John',
-            'last_name' => 'Doe (Admin)',
+            'first_name' => 'Admin',
+            'last_name' => 'User',
             'email' => 'admin@example.com',
             'password' => Hash::make('asdf')
         ]);
@@ -44,8 +44,8 @@ class UserTableSeeder extends Seeder
 
         $editorRole = Role::create(['name' => 'Editor']);
         $editor = User::create([
-            'first_name' => 'John',
-            'last_name' => 'Doe (Editor)',
+            'first_name' => 'Editor',
+            'last_name' => 'User',
             'email' => 'editor@example.com',
             'password' => Hash::make('asdf')
         ]);

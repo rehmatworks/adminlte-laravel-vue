@@ -27,7 +27,7 @@ class UserController extends Controller
         }
         if($request->q)
         {
-            $users = $users->where('name', 'like', '%s'.$request->q.'%s')->orWhere('email', $request->q);
+            $users = $users->where('first_name', 'like', '%'.$request->q.'%')->orWhere('last_name', 'like', '%'.$request->q.'%')->orWhere('email', $request->q);
         }
         return $users->paginate(10);
     }
@@ -35,7 +35,6 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $user->update($request->all());
-
         if($request->user()->can('manage-roles') && $request->user()->id != $user->id)
         {
             $user->syncRoles([$request->roleid]);

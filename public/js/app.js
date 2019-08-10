@@ -2225,16 +2225,16 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch("".concat(baseUrl, "/api/users/").concat(_this.user.id), _this.user).then(function (res) {
         _this.loading = false;
 
-        _this.showToast('Settings have been updated', 'success');
+        _this.showToast('Profile has been updated', 'success');
 
         _this.$parent.getUser();
       })["catch"](function (err) {
         _this.loading = false;
 
-        _this.showToast('Settings cannot be updated', 'error');
-
         if (err.response.data.errors) {
           _this.errors = err.response.data.errors;
+        } else {
+          _this.showToast('Profile cannot be updated', 'error');
         }
       });
     },
@@ -2318,11 +2318,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       users: [],
-      q: ''
+      q: '',
+      hasSearch: false
     };
   },
   mounted: function mounted() {
@@ -2333,7 +2337,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       _this.loading = true;
-      axios.get("".concat(baseUrl, "/api/users")).then(function (res) {
+      _this.hasSearch = _this.q;
+      axios.get("".concat(baseUrl, "/api/users?q=").concat(this.q)).then(function (res) {
         _this.loading = false;
         _this.users = res.data;
       })["catch"](function (err) {
@@ -2341,6 +2346,10 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.showToast('Something went wrong', 'error');
       });
+    },
+    resetSearch: function resetSearch() {
+      this.q = '';
+      this.getUsers();
     }
   }
 });
@@ -38683,17 +38692,59 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("section", { staticClass: "content-header" }, [
+      _c("h1", [
+        _vm._v("\n            Manage Users "),
+        _vm.users.total
+          ? _c("span", [_vm._v("(" + _vm._s(_vm.users.total) + ")")])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("small", [_vm._v("Add or update users")])
+      ])
+    ]),
     _vm._v(" "),
     _c("section", { staticClass: "content" }, [
       _c("div", { staticClass: "box" }, [
         _c("div", { staticClass: "box-header with-border" }, [
-          _c("h3", { staticClass: "box-title" }, [
-            _vm._v("Users "),
-            _vm.users.total
-              ? _c("span", [_vm._v("(" + _vm._s(_vm.users.total) + ")")])
-              : _vm._e()
-          ])
+          _c(
+            "div",
+            { staticClass: "form-group", staticStyle: { margin: "0px" } },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.q,
+                    expression: "q"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Type and hit enter to search users..."
+                },
+                domProps: { value: _vm.q },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.getUsers()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.q = $event.target.value
+                  }
+                }
+              })
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "box-body" }, [
@@ -38706,7 +38757,7 @@ var render = function() {
                     _c(
                       "tbody",
                       [
-                        _vm._m(1),
+                        _vm._m(0),
                         _vm._v(" "),
                         _vm._l(_vm.users.data, function(user) {
                           return _c("tr", [
@@ -38718,10 +38769,14 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "td",
+                              { staticClass: "text-right" },
                               [
+                                _vm._m(1, true),
+                                _vm._v(" "),
                                 _c(
                                   "router-link",
                                   {
+                                    staticClass: "btn btn-xs btn-info",
                                     attrs: {
                                       to: {
                                         name: "account-settings",
@@ -38729,7 +38784,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("Edit")]
+                                  [_c("i", { staticClass: "fa fa-edit" })]
                                 )
                               ],
                               1
@@ -38745,17 +38800,29 @@ var render = function() {
             : _c("div", [
                 !_vm.loading
                   ? _c("div", [
-                      _vm.q
+                      _vm.hasSearch
                         ? _c("div", { staticClass: "text-center" }, [
-                            _vm._v(
-                              "\n                            No results found for your search query "
-                            ),
-                            _c("strong", [_vm._v(_vm._s(_vm.q))]),
-                            _vm._v(".\n                        ")
+                            _c("h4", [
+                              _vm._v(
+                                "No results found for your search query! "
+                              ),
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "javascript:void(0)" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.resetSearch()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Reset Search")]
+                              )
+                            ])
                           ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._m(2)
+                        : _c("div", { staticClass: "text-center text-muted" }, [
+                            _c("h4", [_vm._v("No users found!")])
+                          ])
                     ])
                   : _vm._e()
               ])
@@ -38775,17 +38842,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "content-header" }, [
-      _c("h1", [
-        _vm._v("\n            Manage Users\n            "),
-        _c("small", [_vm._v("Add or update users")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("tr", [
       _c("th", [_vm._v("Name")]),
       _vm._v(" "),
@@ -38800,8 +38856,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center text-muted" }, [
-      _c("h4", [_vm._v("No users found!")])
+    return _c("button", { staticClass: "btn btn-xs btn-danger" }, [
+      _c("i", { staticClass: "fa fa-trash" })
     ])
   }
 ]

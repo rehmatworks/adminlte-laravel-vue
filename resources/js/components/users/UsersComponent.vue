@@ -2,14 +2,16 @@
 <div>
     <section class="content-header">
         <h1>
-            Manage Users
+            Manage Users <span v-if="users.total">({{ users.total }})</span>
             <small>Add or update users</small>
         </h1>
     </section>
     <section class="content">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Users <span v-if="users.total">({{ users.total }})</span></h3>
+                <div style="margin:0px;" class="form-group">
+                    <input @keyup.enter="getUsers()" v-model="q" type="text" class="form-control" placeholder="Type and hit enter to search users...">
+                </div>
             </div>
             <div class="box-body">
                 <div v-if="users.total" class="table-responsive">
@@ -25,8 +27,9 @@
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.membersince }}</td>
-                                <td>
-                                    <router-link :to="{name: 'account-settings', params:{userId: user.id}}">Edit</router-link>
+                                <td class="text-right">
+                                    <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                    <router-link class="btn btn-xs btn-info" :to="{name: 'account-settings', params:{userId: user.id}}"><i class="fa fa-edit"></i></router-link>
                                 </td>
                             </tr>
                         </tbody>
@@ -34,10 +37,10 @@
                 </div>
                 <div v-else>
                     <div v-if="!loading">
-                        <div class="text-center" v-if="q">
-                            No results found for your search query <strong>{{ q }}</strong>.
+                        <div class="text-center" v-if="hasSearch">
+                            <h4>No results found for your search query! <a href="javascript:void(0)" @click="resetSearch()">Reset Search</a></h4>
                         </div>
-                        <div class="text-center text-muted">
+                        <div v-else class="text-center text-muted">
                             <h4>No users found!</h4>
                         </div>
                     </div>
@@ -56,7 +59,8 @@ export default {
     data() {
         return {
             users: [],
-            q: ''
+            q: '',
+            hasSearch: false
         }
     },
     mounted() {
@@ -66,13 +70,18 @@ export default {
         getUsers() {
             let _this = this;
             _this.loading = true;
-            axios.get(`${baseUrl}/api/users`).then((res) => {
+            _this.hasSearch = _this.q;
+            axios.get(`${baseUrl}/api/users?q=${this.q}`).then((res) => {
                 _this.loading = false;
                 _this.users = res.data;
             }).catch((err) => {
                 _this.loading = false;
                 _this.showToast('Something went wrong', 'error');
             });
+        },
+        resetSearch() {
+            this.q = '';
+            this.getUsers();
         }
     }
 }
