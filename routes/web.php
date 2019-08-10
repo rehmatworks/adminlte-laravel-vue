@@ -5,6 +5,9 @@ Route::post('signout', function() {
 Route::get('auth', function() {
     return redirect(url('auth/login'));
 });
+Route::get('home', function() {
+    return redirect('/');
+});
 Route::get('/auth/new-password', 'SpaController@auth')->middleware('guest')->name('password.reset');
 Route::post('/auth/login', 'Auth\LoginController@login');
 Route::post('/auth/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail');
