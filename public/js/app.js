@@ -2013,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
 
         window.setTimeout(function () {
           window.location = '';
-        }, 3000);
+        }, 2000);
       })["catch"](function (err) {
         _this.loading = false;
 

@@ -71,7 +71,7 @@ export default {
                 _this.showToast('Password updated', 'success');
                 window.setTimeout(function() {
                     window.location = '';
-                }, 3000);
+                }, 2000);
             }).catch((err) => {
                 _this.loading = false;
                 if(err.response.data.errors) {
