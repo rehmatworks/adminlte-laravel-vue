@@ -9,14 +9,14 @@
     <section class="content">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">General Settings</h3>
+                <h3 class="box-title text-primary">General Settings</h3>
             </div>
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.app_name}">
                             <label>Website Name</label>
-                            <input type="text" class="form-control" v-model="settings.app_name" placeholder="Website name...">
+                            <input @keyup.enter="updateSettings()" type="text" class="form-control" v-model="settings.app_name" placeholder="Website name...">
                             <span class="help-block" v-if="errors.app_name">{{ errors.app_name[0] }}</span>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.allow_signups}">
-                            <label>Allow User Signup</label>
+                            <label>Allow User Signups</label>
                             <select class="form-control" v-model="settings.allow_signups">
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="box-header with-border">
-                <h3 class="box-title">Mail Settings</h3>
+                <h3 class="box-title text-primary">Mail Settings</h3>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -55,7 +55,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mail_host}">
                             <label>SMTP Host</label>
-                            <input type="text" class="form-control" v-model="settings.mail_host" placeholder="SMTP host...">
+                            <input @keyup.enter="updateSettings()" type="text" class="form-control" v-model="settings.mail_host" placeholder="SMTP host...">
                             <span class="help-block" v-if="errors.mail_host">{{ errors.mail_host[0] }}</span>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mail_username}">
                             <label>SMTP Username</label>
-                            <input type="text" class="form-control" v-model="settings.mail_username" placeholder="SMTP username...">
+                            <input @keyup.enter="updateSettings()" type="text" class="form-control" v-model="settings.mail_username" placeholder="SMTP username...">
                             <span class="help-block" v-if="errors.mail_username">{{ errors.mail_username[0] }}</span>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mail_password}">
                             <label>SMTP Password</label>
-                            <input type="password" class="form-control" v-model="settings.mail_password" placeholder="SMTP password...">
+                            <input @keyup.enter="updateSettings()" type="password" class="form-control" v-model="settings.mail_password" placeholder="SMTP password...">
                             <span class="help-block" v-if="errors.mail_password">{{ errors.mail_password[0] }}</span>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mail_port}">
                             <label>SMTP Port</label>
-                            <input type="number" class="form-control" v-model="settings.mail_port" placeholder="SMTP port...">
+                            <input @keyup.enter="updateSettings()" type="number" class="form-control" v-model="settings.mail_port" placeholder="SMTP port...">
                             <span class="help-block" v-if="errors.mail_port">{{ errors.mail_port[0] }}</span>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mailgun_domain}">
                             <label>Mailgun Domain</label>
-                            <input type="text" class="form-control" v-model="settings.mailgun_domain" placeholder="Mailgun domain...">
+                            <input @keyup.enter="updateSettings()" type="text" class="form-control" v-model="settings.mailgun_domain" placeholder="Mailgun domain...">
                             <span class="help-block" v-if="errors.mailgun_domain">{{ errors.mailgun_domain[0] }}</span>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mailgun_secret}">
                             <label>Mailgun Secret</label>
-                            <input type="text" class="form-control" v-model="settings.mailgun_secret" placeholder="Mailgun secret...">
+                            <input @keyup.enter="updateSettings()" type="text" class="form-control" v-model="settings.mailgun_secret" placeholder="Mailgun secret...">
                             <span class="help-block" v-if="errors.mailgun_secret">{{ errors.mailgun_secret[0] }}</span>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mailgun_endpoint}">
                             <label>Mailgun Endpoint</label>
-                            <input type="text" class="form-control" v-model="settings.mailgun_endpoint" placeholder="Mailgun endpoint...">
+                            <input @keyup.enter="updateSettings()" type="text" class="form-control" v-model="settings.mailgun_endpoint" placeholder="Mailgun endpoint...">
                             <span class="help-block" v-if="errors.mailgun_endpoint">{{ errors.mailgun_endpoint[0] }}</span>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mail_from_email}">
                             <label>From Email</label>
-                            <input type="text" class="form-control" v-model="settings.mail_from_email" placeholder="Default from email...">
+                            <input @keyup.enter="updateSettings()" type="text" class="form-control" v-model="settings.mail_from_email" placeholder="Default from email...">
                             <span class="help-block" v-if="errors.mail_from_email">{{ errors.mail_from_email[0] }}</span>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.mail_from_name}">
                             <label>From Name</label>
-                            <input type="text" class="form-control" v-model="settings.mail_from_name" placeholder="Default from name...">
+                            <input @keyup.enter="updateSettings()" type="text" class="form-control" v-model="settings.mail_from_name" placeholder="Default from name...">
                             <span class="help-block" v-if="errors.mail_from_name">{{ errors.mail_from_name[0] }}</span>
                         </div>
                     </div>
