@@ -2,34 +2,37 @@
   <div class="box">
       <div class="login-box-body">
           <p class="login-box-msg">Create an account</p>
+          <div v-if="!signupallowed" class="alert alert-warning">
+              Signups are currently disabled by the admins.
+          </div>
           <div class="form-group has-feedback" :class="{'has-error': errors.email}">
-              <input :disabled="loading" @keyup.enter="signUp()"  type="email" v-model="userdata.email" class="form-control" placeholder="Email address">
+              <input :disabled="loading || !signupallowed" @keyup.enter="signUp()"  type="email" v-model="userdata.email" class="form-control" placeholder="Email address">
               <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
               <span class="help-block" v-if="errors.email">{{ errors.email[0] }}</span>
           </div>
           <div class="form-group has-feedback" :class="{'has-error': errors.first_name}">
-              <input :disabled="loading" @keyup.enter="signUp()"  type="text" v-model="userdata.first_name" class="form-control" placeholder="First name">
+              <input :disabled="loading || !signupallowed" @keyup.enter="signUp()"  type="text" v-model="userdata.first_name" class="form-control" placeholder="First name">
               <span class="glyphicon glyphicon-user form-control-feedback"></span>
               <span class="help-block" v-if="errors.first_name">{{ errors.first_name[0] }}</span>
           </div>
           <div class="form-group has-feedback" :class="{'has-error': errors.last_name}">
-              <input :disabled="loading" @keyup.enter="signUp()"  type="text" v-model="userdata.last_name" class="form-control" placeholder="Last name">
+              <input :disabled="loading || !signupallowed" @keyup.enter="signUp()"  type="text" v-model="userdata.last_name" class="form-control" placeholder="Last name">
               <span class="glyphicon glyphicon-user form-control-feedback"></span>
               <span class="help-block" v-if="errors.last_name">{{ errors.last_name[0] }}</span>
           </div>
           <div class="form-group has-feedback" :class="{'has-error': errors.password}">
-              <input :disabled="loading" @keyup.enter="signUp()" type="password" v-model="userdata.password" class="form-control" placeholder="Set account password">
+              <input :disabled="loading || !signupallowed" @keyup.enter="signUp()" type="password" v-model="userdata.password" class="form-control" placeholder="Set account password">
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <span class="help-block" v-if="errors.password">{{ errors.password[0] }}</span>
           </div>
           <div class="form-group has-feedback" :class="{'has-error': errors.password_confirmation}">
-              <input :disabled="loading" @keyup.enter="signUp()" type="password" v-model="userdata.password_confirmation" class="form-control" placeholder="Confirm account password">
+              <input :disabled="loading || !signupallowed" @keyup.enter="signUp()" type="password" v-model="userdata.password_confirmation" class="form-control" placeholder="Confirm account password">
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <span class="help-block" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</span>
           </div>
           <div class="row">
               <div class="col-xs-4 pull-right">
-                  <button :disabled="loading" @click="signUp()" type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
+                  <button :disabled="loading || !signupallowed" @click="signUp()" type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
               </div>
           </div>
       </div>
@@ -47,6 +50,7 @@ export default {
     data() {
         return {
             errors: [],
+            signupallowed: true,
             userdata: {
                 email: '',
                 first_name: '',
@@ -55,6 +59,12 @@ export default {
                 password_confirmation: ''
             }
         }
+    },
+    mounted() {
+        let _this = this;
+        axios.get(`${baseUrl}/api/users/signupallowed`).then((res) => {
+            _this.signupallowed = res.data.signupallowed;
+        });
     },
     methods: {
         signUp() {
@@ -68,6 +78,8 @@ export default {
                 _this.loading = false;
                 if(err.response.data.errors) {
                     _this.errors = err.response.data.errors;
+                } else {
+                    _this.showToast(err.response.data.message, 'error');
                 }
             });
         }

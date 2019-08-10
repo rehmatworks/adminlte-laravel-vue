@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 
+Route::get('users/signupallowed', 'UserController@signupallowed');
 Route::middleware('auth:api')->group(function() {
     Route::get('users/get', 'UserController@get');
     Route::resource('users', 'UserController');

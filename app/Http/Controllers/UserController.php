@@ -67,10 +67,6 @@ class UserController extends Controller
 
     public function store(UserAddRequest $request)
     {
-        if(setting('allow_signups') != 'yes')
-        {
-            return response()->json(['message' => 'Registration is disabled by website admins.'], 403);
-        }
         $user = new User($request->only(['first_name', 'last_name', 'email']));
         $user->password = Hash::make($request->password);
         $user->save();
@@ -84,5 +80,10 @@ class UserController extends Controller
             return response()->json(['valid' => true]);
         }
         return response()->json(['valid' => false]);
+    }
+
+    public function signupallowed()
+    {
+        return response()->json(['signupallowed' => strtolower(setting('allow_signups')) == 'yes']);
     }
 }
