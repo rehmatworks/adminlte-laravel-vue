@@ -11,7 +11,7 @@
               <input :disabled="loading" @keyup.enter="signIn()" type="password" v-model="userdata.password" class="form-control" placeholder="Account password">
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <span class="help-block" v-if="errors.password">{{ errors.password[0] }}</span>
-              <small>Forgot your password? <a href="/">Reset it here</a></small>
+              <small>Forgot your password? <router-link :to="{name: 'reset'}">Reset it here</router-link></small>
           </div>
           <div class="row">
               <div class="col-xs-4 pull-right">

@@ -39,7 +39,6 @@ Vue.mixin({
                 _this.loading = false;
             }).catch((err) => {
                 _this.loading = false;
-                _this.showToast('Something went wrong', 'error');
             });
         },
         showToast(msg, type = 'info') {

@@ -38,5 +38,21 @@ export const routes = [
         meta: {
             title: 'Account Signup'
         }
+    },
+    {
+        path: '/auth/reset',
+        name: 'reset',
+        component: require('../components/auth/ResetComponent').default,
+        meta: {
+            title: 'Reset Account Password'
+        }
+    },
+    {
+        path: '/auth/new-password',
+        name: 'new-password',
+        component: require('../components/auth/NewPassword').default,
+        meta: {
+            title: 'Set New Account Password'
+        }
     }
 ];
