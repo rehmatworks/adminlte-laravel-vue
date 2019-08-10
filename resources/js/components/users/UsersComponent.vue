@@ -14,37 +14,45 @@
         <div class="box" v-if="addUser">
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-2 col-sm-12">
+                    <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.first_name}">
                             <label>First Name</label>
                             <input @keyup.enter="createUser()" v-model="newUser.first_name" :disabled="adding" type="text" class="form-control" placeholder="First name">
                             <span class="help-block" v-if="errors.first_name">{{ errors.first_name[0] }}</span>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-12" :class="{'has-error': errors.last_name}">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12" :class="{'has-error': errors.last_name}">
                         <div class="form-group">
                             <label>Last Name</label>
                             <input @keyup.enter="createUser()" v-model="newUser.last_name" :disabled="adding" type="text" class="form-control" placeholder="Last name">
                             <span class="help-block" v-if="errors.last_name">{{ errors.last_name[0] }}</span>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-12" :class="{'has-error': errors.email}">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12" :class="{'has-error': errors.email}">
                         <div class="form-group">
                             <label>Email</label>
                             <input @keyup.enter="createUser()" v-model="newUser.email" :disabled="adding" type="text" class="form-control" placeholder="Email">
                             <span class="help-block" v-if="errors.email">{{ errors.email[0] }}</span>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-12">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.password}">
                             <label>Password</label>
                             <input @keyup.enter="createUser()" v-model="newUser.password" :disabled="adding" type="password" class="form-control" placeholder="Set account password">
                             <span class="help-block" v-if="errors.password">{{ errors.password[0] }}</span>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-12">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <button @click="createUser()" :disabled="adding" style="margin-top: 25px;" class="btn btn-primary">Add User</button>
+                            <button @click="createUser()" :disabled="adding" class="btn btn-primary">Add User</button>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,10 @@
     <section class="content-header">
         <h1>
             Account Settings
-            <small>Manage your profile settings</small>
+            <span v-if="!loading">
+                <small v-if="user && $route.params.userId">Update {{ user.first_name }}'s profile</small>
+                <small v-else>Update your profile</small>
+            </span>
         </h1>
     </section>
     <section class="content">
