@@ -24,10 +24,11 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $userId = $this->user ? $this->user->id : $this->user()->id;
         return [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
-            'email' => 'required|max:255|unique:users,email,'.$this->user()->id,
+            'email' => 'required|max:255|unique:users,email,'.$userId,
             'bio' => 'nullable|max:1000'
         ];
     }

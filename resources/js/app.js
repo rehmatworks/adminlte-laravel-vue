@@ -24,14 +24,20 @@ Vue.mixin({
         }
     },
     methods: {
-        getUser() {
+        getUser(userId = false) {
             let _this = this;
             _this.loading = true;
-            axios.get(`${baseUrl}/api/users/get`).then((res) => {
+            if(userId) {
+                var reqUrl = `${baseUrl}/api/users/${userId}`;
+            } else {
+                var reqUrl = `${baseUrl}/api/users/get`;
+            }
+            axios.get(reqUrl).then((res) => {
                 _this.user = res.data;
                 _this.loading = false;
             }).catch((err) => {
                 _this.loading = false;
+                _this.showToast('Something went wrong', 'error');
             });
         },
         showToast(msg, type = 'info') {

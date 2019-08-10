@@ -71,7 +71,12 @@ export default {
         }
     },
     mounted() {
-        this.getUser();
+        if(this.$route.params.userId)
+        {
+            this.getUser(this.$route.params.userId);
+        } else {
+            this.getUser();
+        }
     },
     methods: {
         updateProfile() {

@@ -8,7 +8,7 @@ export const routes = [
         }
     },
     {
-        path: '/account-settings',
+        path: '/profile/:userId?',
         name: 'account-settings',
         component: require('../components/account/AccountSettings').default,
         meta: {

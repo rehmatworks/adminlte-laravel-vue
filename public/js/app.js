@@ -1932,7 +1932,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.getUser();
+    if (this.$route.params.userId) {
+      this.getUser(this.$route.params.userId);
+    } else {
+      this.getUser();
+    }
   },
   methods: {
     updateProfile: function updateProfile() {
@@ -2235,6 +2239,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -38620,7 +38626,24 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(user.membersince))]),
                             _vm._v(" "),
-                            _c("td")
+                            _c(
+                              "td",
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    attrs: {
+                                      to: {
+                                        name: "account-settings",
+                                        params: { userId: user.id }
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Edit")]
+                                )
+                              ],
+                              1
+                            )
                           ])
                         })
                       ],
@@ -53731,14 +53754,25 @@ Vue.mixin({
   },
   methods: {
     getUser: function getUser() {
+      var userId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
       var _this = this;
 
       _this.loading = true;
-      axios.get("".concat(baseUrl, "/api/users/get")).then(function (res) {
+
+      if (userId) {
+        var reqUrl = "".concat(baseUrl, "/api/users/").concat(userId);
+      } else {
+        var reqUrl = "".concat(baseUrl, "/api/users/get");
+      }
+
+      axios.get(reqUrl).then(function (res) {
         _this.user = res.data;
         _this.loading = false;
       })["catch"](function (err) {
         _this.loading = false;
+
+        _this.showToast('Something went wrong', 'error');
       });
     },
     showToast: function showToast(msg) {
@@ -54285,7 +54319,7 @@ var routes = [{
     title: 'Blank Page'
   }
 }, {
-  path: '/account-settings',
+  path: '/profile/:userId?',
   name: 'account-settings',
   component: __webpack_require__(/*! ../components/account/AccountSettings */ "./resources/js/components/account/AccountSettings.vue")["default"],
   meta: {

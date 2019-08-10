@@ -25,7 +25,9 @@
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.membersince }}</td>
-                                <td></td>
+                                <td>
+                                    <router-link :to="{name: 'account-settings', params:{userId: user.id}}">Edit</router-link>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
