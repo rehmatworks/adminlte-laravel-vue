@@ -1,6 +1,6 @@
 <header class="main-header">
     <a href="{{ url('/') }}" class="logo">
-        {{ env('APP_NAME') }}
+        {{ config('app.name') }}
     </a>
     <nav class="navbar navbar-static-top">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">

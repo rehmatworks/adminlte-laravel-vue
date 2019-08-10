@@ -7,7 +7,33 @@
         </h1>
     </section>
     <section class="content">
-        <div class="box box-primary">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">General Settings</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group" :class="{'has-error': errors.app_name}">
+                            <label>Website Name</label>
+                            <input type="text" class="form-control" v-model="settings.app_name" placeholder="Website name...">
+                            <span class="help-block" v-if="errors.app_name">{{ errors.app_name[0] }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group" :class="{'has-error': errors.allow_signups}">
+                            <label>Allow User Signup</label>
+                            <select class="form-control" v-model="settings.allow_signups">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                            <span class="help-block" v-if="errors.allow_signups">{{ errors.allow_signups[0] }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="box-header with-border">
                 <h3 class="box-title">Mail Settings</h3>
             </div>

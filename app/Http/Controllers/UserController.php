@@ -67,6 +67,10 @@ class UserController extends Controller
 
     public function store(UserAddRequest $request)
     {
+        if(!setting('allow_signups'))
+        {
+            return response()->json(['message' => 'Registration is disabled by website admins.'], 403);
+        }
         $user = new User($request->only(['first_name', 'last_name', 'email']));
         $user->password = Hash::make($request->password);
         $user->save();

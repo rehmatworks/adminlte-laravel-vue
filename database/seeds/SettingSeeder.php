@@ -13,10 +13,11 @@ class SettingSeeder extends Seeder
     {
         $settings = [
                 'app_name' => 'Laravel',
-                'mail_driver' => 'smtp',
+                'allow_signups' => true,
+                'mail_driver' => 'sendmail',
                 'mail_host' => 'smtp.mailtrap.io',
                 'mail_port' => 2525,
-                'mail_user' => '',
+                'mail_username' => '',
                 'mail_password' => '',
                 'mail_encryption' => 'tls',
                 'mail_from_email' => '',
