@@ -30,6 +30,7 @@
         var baseUrl = '{{ url('/') }}';
         var appName = '{{ env('APP_NAME') }}';
     </script>
+    <script src="https://unpkg.com/vue-toasted"></script>
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <script>

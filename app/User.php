@@ -6,10 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -17,10 +18,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password',
+        'first_name', 'last_name', 'bio', 'email', 'password',
     ];
 
-    protected $appends = ['name', 'gravatar', 'membersince'];
+    protected $appends = ['name', 'gravatar', 'membersince', 'allpermissions'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -54,5 +55,10 @@ class User extends Authenticatable
     public function getNameAttribute()
     {
         return sprintf('%s %s', $this->attributes['first_name'], $this->attributes['last_name']);
+    }
+
+    public function getAllpermissionsAttribute()
+    {
+        return $this->getAllPermissions()->pluck('name');
     }
 }

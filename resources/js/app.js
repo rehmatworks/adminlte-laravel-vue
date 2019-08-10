@@ -5,6 +5,9 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+import Toasted from 'vue-toasted';
+Vue.use(Toasted);
+
 Vue.component('notifications-component', require('./components/common/NotificationsComponent').default);
 
 import { routes } from './routes/routes.js';
@@ -24,12 +27,31 @@ Vue.mixin({
         getUser() {
             let _this = this;
             _this.loading = true;
-            axios.get(`${baseUrl}/api/user`).then((res) => {
+            axios.get(`${baseUrl}/api/users/get`).then((res) => {
                 _this.user = res.data;
                 _this.loading = false;
             }).catch((err) => {
                 _this.loading = false;
             });
+        },
+        showToast(msg, type = 'info') {
+            if(type == 'success') {
+                var icon = 'fa-check-circle';
+            } else if(type == 'error') {
+                var icon = 'fa-times-circle';
+            } else {
+                var icon = 'fa-check-circle';
+            }
+            this.$toasted.show(msg, {
+                theme: 'outline',
+                type: type,
+                duration: 3000,
+                iconPack: 'fontawesome',
+                icon: icon
+            });
+        },
+        userCan(permission) {
+            return (this.user && this.user.allpermissions && this.user.allpermissions.includes(permission));
         }
     }
 });

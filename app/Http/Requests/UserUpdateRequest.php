@@ -28,6 +28,7 @@ class UserUpdateRequest extends FormRequest
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'email' => 'required|max:255|unique:users,email,'.$this->user()->id,
+            'bio' => 'nullable|max:1000'
         ];
     }
 }

@@ -27,6 +27,11 @@
                     <i class="fa fa-user"></i><span>Profile Settings</span>
                 </router-link>
             </li>
+            <li v-if="userCan('manage-users')" :class="{'active': $route.name == 'manage-users'}">
+                <router-link :to="{name: 'manage-users'}">
+                    <i class="fa fa-group"></i><span>Manage Users</span>
+                </router-link>
+            </li>
         </ul>
     </section>
 

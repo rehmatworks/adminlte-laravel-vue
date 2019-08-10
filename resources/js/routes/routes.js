@@ -16,6 +16,14 @@ export const routes = [
         }
     },
     {
+        path: '/manage-users',
+        name: 'manage-users',
+        component: require('../components/users/UsersComponent').default,
+        meta: {
+            title: 'Manage Users'
+        }
+    },
+    {
         path: '/auth/login',
         name: 'login',
         component: require('../components/auth/LoginComponent').default,

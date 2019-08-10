@@ -40,6 +40,15 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group" :class="{'has-error': errors.bio}">
+                            <label>Biography</label>
+                            <textarea rows="6" :disabled="loading" v-model="user.bio" class="form-control" placeholder="Biography..."></textarea>
+                            <span class="help-block" v-if="errors.bio">{{ errors.bio[0] }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12">
                         <button :disabled="loading" @click="updateProfile()" class="btn btn-primary">Update Profile</button>
                     </div>
@@ -57,7 +66,8 @@
 export default {
     data() {
         return {
-            errors: []
+            errors: [],
+            roles: []
         }
     },
     mounted() {
@@ -68,12 +78,16 @@ export default {
             let _this = this;
             _this.loading = true;
             _this.errors = [];
-            axios.post(`${baseUrl}/api/update-profile`, _this.user).then((res) => {
+            axios.patch(`${baseUrl}/api/users/${_this.user.id}`, _this.user).then((res) => {
                 _this.loading = false;
+                _this.showToast('Settings have been updated', 'success');
                 _this.$parent.getUser();
             }).catch((err) => {
                 _this.loading = false;
-                _this.errors = err.response.data.errors;
+                _this.showToast('Settings cannot be updated', 'error');
+                if(err.response.data.errors) {
+                    _this.errors = err.response.data.errors;
+                }
             });
         }
     }
