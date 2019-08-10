@@ -26,8 +26,8 @@
                         <div class="form-group" :class="{'has-error': errors.allow_signups}">
                             <label>Allow User Signups</label>
                             <select class="form-control" v-model="settings.allow_signups">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
                             </select>
                             <span class="help-block" v-if="errors.allow_signups">{{ errors.allow_signups[0] }}</span>
                         </div>

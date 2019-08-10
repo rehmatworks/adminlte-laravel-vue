@@ -67,7 +67,7 @@ class UserController extends Controller
 
     public function store(UserAddRequest $request)
     {
-        if(!setting('allow_signups'))
+        if(setting('allow_signups') != 'yes')
         {
             return response()->json(['message' => 'Registration is disabled by website admins.'], 403);
         }
