@@ -46,7 +46,7 @@ class UserTableSeeder extends Seeder
         $editor = User::create([
             'first_name' => 'Editor',
             'last_name' => 'User',
-            'email' => 'editor@example.com',
+            'email' => 'splendidblogger@gmail.com',
             'password' => Hash::make('asdf')
         ]);
     }

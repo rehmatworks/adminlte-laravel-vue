@@ -17,8 +17,8 @@
                 </router-link>
             </li>
             <li class="header">Website & Account</li>
-            <li :class="{'active': $route.name == 'account-settings'}">
-                <router-link :to="{name: 'account-settings'}">
+            <li v-if="userCan('website-settings')" :class="{'active': $route.name == 'website-settings'}">
+                <router-link :to="{name: 'website-settings'}">
                     <i class="fa fa-cogs"></i><span>Website Settings</span>
                 </router-link>
             </li>

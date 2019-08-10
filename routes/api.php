@@ -8,4 +8,6 @@ Route::middleware(['auth:api', 'throttle:500,1'])->group(function() {
     Route::get('get-roles', 'UserController@get_roles');
     Route::get('get-notifs', 'NotificationsController@get');
     Route::post('clear-notifs/{notif?}', 'NotificationsController@clear');
+    Route::get('settings', 'SettingController@get');
+    Route::post('settings', 'SettingController@store');
 });

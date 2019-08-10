@@ -22,8 +22,12 @@ Vue.mixin({
     data() {
         return {
             user: false,
-            loading: false
+            loading: false,
+            settings: {}
         }
+    },
+    mounted() {
+
     },
     methods: {
         getUser(userId = false) {

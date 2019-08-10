@@ -24,6 +24,14 @@ export const routes = [
         }
     },
     {
+        path: '/settings/website',
+        name: 'website-settings',
+        component: require('../components/settings/WebsiteSettings').default,
+        meta: {
+            title: 'Website Settings'
+        }
+    },
+    {
         path: '/auth/login',
         name: 'login',
         component: require('../components/auth/LoginComponent').default,
