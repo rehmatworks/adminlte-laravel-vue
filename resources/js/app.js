@@ -8,6 +8,8 @@ Vue.use(VueRouter);
 import Toasted from 'vue-toasted';
 Vue.use(Toasted);
 
+Vue.component('pagination', require('laravel-vue-pagination'));
+
 Vue.component('notifications-component', require('./components/common/NotificationsComponent').default);
 
 import { routes } from './routes/routes.js';

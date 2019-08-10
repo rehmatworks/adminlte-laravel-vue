@@ -10,7 +10,7 @@
         <div class="box">
             <div class="box-header with-border">
                 <div style="margin:0px;" class="form-group">
-                    <input @keyup.enter="getUsers()" v-model="q" type="text" class="form-control" placeholder="Type and hit enter to search users...">
+                    <input :disabled="loading" @keyup.enter="getUsers()" v-model="q" type="text" class="form-control" placeholder="Type and hit enter to search users...">
                 </div>
             </div>
             <div class="box-body">
@@ -45,6 +45,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="row text-center">
+                    <pagination :data="users" @pagination-change-page="getUsers"></pagination>
+                </div>
             </div>
             <div v-if="loading" class="overlay">
                 <i class="fa fa-refresh fa-spin"></i>
@@ -67,11 +70,11 @@ export default {
         this.getUsers();
     },
     methods: {
-        getUsers() {
+        getUsers(page = 1) {
             let _this = this;
             _this.loading = true;
             _this.hasSearch = _this.q;
-            axios.get(`${baseUrl}/api/users?q=${this.q}`).then((res) => {
+            axios.get(`${baseUrl}/api/users?q=${this.q}&page=${page}`).then((res) => {
                 _this.loading = false;
                 _this.users = res.data;
             }).catch((err) => {

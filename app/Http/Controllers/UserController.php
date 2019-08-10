@@ -29,7 +29,7 @@ class UserController extends Controller
         {
             $users = $users->where('first_name', 'like', '%'.$request->q.'%')->orWhere('last_name', 'like', '%'.$request->q.'%')->orWhere('email', $request->q);
         }
-        return $users->paginate(10);
+        return $users->paginate(1);
     }
 
     public function update(UserUpdateRequest $request, User $user)
