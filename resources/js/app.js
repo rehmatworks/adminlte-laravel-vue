@@ -57,7 +57,7 @@ Vue.mixin({
             });
         },
         userCan(permission) {
-            return (this.user && this.user.allpermissions && this.user.allpermissions.includes(permission));
+            return this.user.issuperadmin || (this.user && this.user.allpermissions && this.user.allpermissions.includes(permission));
         }
     }
 });

@@ -11,7 +11,7 @@ class UserPolicy
 
     public function before(User $user)
     {
-        if($user->can('manage-users'))
+        if($user->hasRole(env('SUPER_ADMIN_ROLE_NAME')))
         {
             return true;
         }
@@ -37,7 +37,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->id == $model->id;
+        return ($user->id == $model->id) || ($user->can('manage-users') && !$model->hasRole(env('SUPER_ADMIN_ROLE_NAME')));
     }
 
     /**
@@ -48,7 +48,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can('manage-users');
+        return ($user->id == $model->id) || ($user->can('manage-users') && !$model->hasRole(env('SUPER_ADMIN_ROLE_NAME')));
     }
 
     /**
@@ -60,7 +60,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->id == $model->id;
+        return ($user->id == $model->id) || ($user->can('manage-users') && !$model->hasRole(env('SUPER_ADMIN_ROLE_NAME')));
     }
 
     /**
@@ -72,7 +72,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->id == $model->id;
+        return ($user->id == $model->id) || ($user->can('manage-users') && !$model->hasRole(env('SUPER_ADMIN_ROLE_NAME')));
     }
 
     /**
@@ -84,7 +84,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return ($user->id == $model->id) || ($user->can('manage-users') && !$model->hasRole(env('SUPER_ADMIN_ROLE_NAME')));
     }
 
     /**
@@ -96,6 +96,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        //
+        return ($user->id == $model->id) || ($user->can('manage-users') && !$model->hasRole(env('SUPER_ADMIN_ROLE_NAME')));
     }
 }

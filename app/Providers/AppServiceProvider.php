@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 use App\User;
 use App\Observers\UserObserver;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        User::observe(UserObserver::class);
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Super Admin') ? true : null;
+        });
     }
 }

@@ -10,7 +10,7 @@ export const routes = [
     {
         path: '/profile/:userId?',
         name: 'account-settings',
-        component: require('../components/account/AccountSettings').default,
+        component: require('../components/users/ProfileComponent').default,
         meta: {
             title: 'Account Settings'
         }

@@ -19,6 +19,12 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
         $users = new User;
         $users = $users->whereNotIn('id', [$request->user()->id]);
+        if(!$request->user()->hasRole(env('SUPER_ADMIN_ROLE_NAME')))
+        {
+            $users = $users->whereHas('roles', function($query) {
+                $query->where('name', '!=', env('SUPER_ADMIN_ROLE_NAME'));
+            });
+        }
         if($request->q)
         {
             $users = $users->where('name', 'like', '%s'.$request->q.'%s')->orWhere('email', $request->q);
@@ -29,6 +35,11 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $user->update($request->all());
+
+        if($request->user()->can('manage-roles') && $request->user()->id != $user->id)
+        {
+            $user->syncRoles([$request->roleid]);
+        }
     }
 
     public function show(Request $request, User $user)

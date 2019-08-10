@@ -21,7 +21,7 @@ class User extends Authenticatable
         'first_name', 'last_name', 'bio', 'email', 'password',
     ];
 
-    protected $appends = ['name', 'gravatar', 'membersince', 'allpermissions'];
+    protected $appends = ['name', 'gravatar', 'membersince', 'allpermissions', 'roleid', 'issuperadmin'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -57,8 +57,18 @@ class User extends Authenticatable
         return sprintf('%s %s', $this->attributes['first_name'], $this->attributes['last_name']);
     }
 
+    public function getRoleidAttribute()
+    {
+        return $this->roles()->count() ? $this->roles()->first()->id : '';
+    }
+
     public function getAllpermissionsAttribute()
     {
         return $this->getAllPermissions()->pluck('name');
+    }
+
+    public function getIssuperadminAttribute()
+    {
+        return env('SUPER_ADMIN_ROLE_NAME') && $this->hasRole(env('SUPER_ADMIN_ROLE_NAME'));
     }
 }

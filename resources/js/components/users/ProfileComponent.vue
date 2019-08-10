@@ -39,6 +39,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" v-if="$parent.userCan('manage-roles') && $parent.user.id != user.id">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group" :class="{'has-error': errors.role}">
+                            <select class="form-control" v-model="user.roleid">
+                                <option value="">No role assigned</option>
+                                <option v-for="role in roles" :value="role.id">{{ role.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group" :class="{'has-error': errors.bio}">
@@ -77,12 +87,14 @@ export default {
         } else {
             this.getUser();
         }
+        this.getRoles();
     },
     methods: {
         updateProfile() {
             let _this = this;
             _this.loading = true;
             _this.errors = [];
+            _this.user.role = _this.role;
             axios.patch(`${baseUrl}/api/users/${_this.user.id}`, _this.user).then((res) => {
                 _this.loading = false;
                 _this.showToast('Settings have been updated', 'success');
@@ -93,6 +105,17 @@ export default {
                 if(err.response.data.errors) {
                     _this.errors = err.response.data.errors;
                 }
+            });
+        },
+        getRoles() {
+            let _this = this;
+            _this.loading = true;
+            axios.get(`${baseUrl}/api/get-roles`).then((res) => {
+                _this.loading = false;
+                _this.roles = res.data;
+            }).catch((err) => {
+                _this.loading = false;
+                _this.showToast('Something went wrong', 'error');
             });
         }
     }
