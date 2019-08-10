@@ -1,7 +1,7 @@
 <header class="main-header">
-    <a href="{{ url('/') }}" class="logo">
+    <router-link :to="'/'" class="logo">
         {{ config('app.name') }}
-    </a>
+    </router-link>
     <nav class="navbar navbar-static-top">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
